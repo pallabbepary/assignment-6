@@ -11,9 +11,6 @@ function handleLogin(){
         alert("Wrong Password. Contact admin to get your Login Code");
         return;
     }
-
-// alert("Login successful! Welcome " + textInput);
-
   document.getElementById("bannerSection").classList.add("hidden");
 
 
@@ -56,9 +53,7 @@ function loadCategories () {
 }
 
 function displayCategories (data){
-    // console.log(data);
     const LearnVocabulariesContainer = document.getElementById("LearnVocabularies-container");
-    // LearnVocabulariesContainer.innerHTML = ""
     
     for(let cat of data){
         const categoriesDiv = document.createElement("div")
@@ -122,18 +117,13 @@ const displayLesson = (data)=>{
         `
         lessonContainer.append (lessonCard)
     });
-    // hideLoader() ///*****************************
-
 }
-
-
-// loadLessonBtn()
 
 
 const loadLessonLevel = (level_no) =>{
     
     const url = `https://openapi.programming-hero.com/api/level/${level_no}`;
-    // console.log(url)
+    
     showLoader();
     fetch(url)
     .then(res => res.json())
