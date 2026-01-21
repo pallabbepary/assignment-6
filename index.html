@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,9 +8,16 @@
     <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <script src="https://kit.fontawesome.com/1b03b811fb.js" crossorigin="anonymous"></script>
+
+    <style>
+        .active{
+            background-color: blue;
+            color: white;
+        }
+    </style>
 </head>
 <body class="">
-    <header class="bg-[#f5f2f2] py-4 border-b-2 border-[#17171720]">
+    <header id="navbarSection" class="bg-[#f5f2f2] py-4 border-b-2 border-[#17171720] sticky top-0 z-50 hidden">
         <nav class="w-11/12 mx-auto flex items-center justify-between ">
             <section class="flex items-center">
                 <h1 class="font-bold">English</h1>
@@ -18,46 +25,161 @@
                 <h1 class="font-semibold">জানালা</h1>
             </section>
             <section class="flex gap-6 items-center">
-                <button class="btn btn-xs hover:bg-blue-700 hover:text-white font-semibold px-2 text-sm rounded-sm border border-[#371ce9] text-[#422AD5] bg-[#f0ecec]"> <img class="hover:text-white" src="./assets/fa-circle-question.png" alt=""> FAQ</button>
+                <a href="#faqSection" id="faqBtn" class="btn btn-xs hover:bg-blue-700 hover:text-white font-semibold px-2 text-sm rounded-sm border border-[#371ce9] text-[#422AD5] bg-[#f0ecec]"> <i class="fa-solid fa-circle-question"></i> FAQ</a>
 
-                <button class="btn btn-xs hover:bg-blue-700 hover:text-white font-semibold px-2 text-sm rounded-sm border border-[#371ce9] text-[#422AD5] bg-[#f0ecec]"> <img src="/assets/fa-book-open.png" alt=""> Learn</button>
+                <a href="#learnSection" id="learnBtn" class="btn btn-xs hover:bg-blue-700 hover:text-white font-semibold px-2 text-sm rounded-sm border border-[#371ce9] text-[#422AD5] bg-[#f0ecec]"> <i class="fa-solid fa-book-open"></i> Learn</a>
 
-                <button class="btn btn-xs hover:bg-blue-700 hover:text-white font-semibold px-2 text-sm rounded-sm border border-[#371ce9] text-[#422AD5] bg-[#f0ecec]"> <img src="./assets/fa-arrow-right-from-bracket.png" alt=""> Logout</button>
+                <button onclick="logout()" id="logout" class="btn btn-xs hover:bg-blue-700 hover:text-white font-semibold px-2 text-sm rounded-sm border border-[#371ce9] text-[#422AD5] bg-[#f0ecec]"> <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</button>
             </section>
         </nav>
     </header>
     <main >
         
-        <div class="w-11/12 mx-auto flex items-center gap-30">
+        <div id="bannerSection" class="bannar-container w-11/12 mx-auto flex justify-evenly items-center">
             <section class="">
                 <h1 class="text-5xl font-bold"> <span class="text-[#00BCFF]">English</span> is Easy!!</h1>
                 <p class="text-2xl font-medium">আজ থেকেই আপনার ভাষা শেখার যাত্রা শুরু করুন। আপনি যদি নতুন হন অথবা<br>আপনার দক্ষতা বাড়াতে চান, আমাদের Interactive Lessons আপনাকে নিয়ে<br>যাবে অন্য একটি Level এ</p>
-                <div class="mt-5  ">
-                    <div class="mb-5">
-                        <input class="rounded-sm p-3 " type="text" placeholder="Enter Your Name">
-                    </div>
-                    <input class="rounded-sm p-3" type="password" name="" id="">
-                    <div class="mt-5">
-                        <button class="btn font-semibold text-sm text-white bg-blue-700 rounded-sm">Get Started</button>
-                    </div>
-                </div>
+
+
+                <fieldset class="fieldset rounded-box w-xs my-4">
+                    <input type="text" id="textInput" class="input" placeholder="Enter Your Name" />
+                    <input type="password" id="passwordInput" class="input" placeholder="Enter Login Code (123456)" />   
+                <fieldset>
+                    <button onclick="handleLogin()" id="getStarted"
+                     class="btn btn-neutral mt-4 border-blue-700 hover:bg-blue-700 bg-white text-blue-600 hover:text-white rounded-sm">Get Started</button>
             </section>
             <section>
                 <img src="./assets/hero-student.png" alt="">
             </section>
         </div>
-        <section  class="text-center ">
-            <h1 class="text-4xl font-bold"><span class="text-[#00BCFF]">Let's</span> Learn Vocabularies</h1>
-            <div id="LearnVocabularies-container" class="flex justify-center gap-7 py-7"> 
-            <!-- <button id="categories-container" class="btn">Lesson-1</button> -->
-            </div>
-            <section id="lesson-Container" class="w-11/12 mx-auto p-7 rounded-3xl grid grid-cols-4 my-10 gap-5 bg-slate-100" >
+        <!-- LEARN SECTION -->
+        <section id="learnSection" class="text-center mt-10 mb-96 scroll-mt-28 hidden">
+                    <h1 class="text-4xl font-bold pb-5"><span class="text-[#00BCFF]">Let's</span> Learn Vocabularies</h1>
+                    <!--Learn Button-->
+                    <div id="LearnVocabularies-container" class="flex justify-center gap-7 py-7 "> 
+                    
+                    </div>
+                    <!-- Card Section -->
+                <section id="lesson-Container" class="w-11/12 mx-auto py-12 rounded-3xl grid    grid-cols-4 my-10 px-5 gap-5 bg-slate-100">
+
+                        <!-- 🔄 LOADER -->
+                        <section id="loader" class="col-span-full text-center hidden">
+                            <span class="loading loading-dots loading-lg"></span>
+                        </section>
+
+                        <!-- DEFAULT MESSAGE -->
+                        <div id="defaultText" class="col-span-full py-10 text-center">
+                            <h3 class="text-sm py-4">আপনি এখনো কোন Lesson Select করেন নাই</h3>
+                            <h1 class="font-medium text-4xl">একটি Lesson Select করুন।</h1>
+                        </div>
+
+                </section>
+               
+            <!-- <section id="lesson-Container" class="w-11/12 mx-auto py-12 rounded-3xl grid    grid-cols-4 my-10 gap-5 bg-slate-100" >
+                    
+                    <section id="loader" class="text-center items-center hidden">
+                        <span class="loading loading-dots loading-lg"></span>
+                    </section>
+                
                 <div class="col-span-full py-10">
                     <h3 class="text-sm py-4">আপনি এখনো কোন Lesson Select করেন নাই</h3>
                     <h1 class="font-medium text-4xl">একটি Lesson Select করুন।</h1>
                 </div>
-            </section>
+            </section> -->
             
+        </section>
+            <dialog id="my_modal_lesson" class="modal">
+                <div class="modal-box">
+                    <div id="modelContainer"></div>
+                        <form method="dialog" class="mt-5">
+                            <button method="dialog" class="btn px-8 py-6  dialog bg-[#422AD5] text-white rounded-xl text-xl font-medium">Complete Learning</button>
+                        </form>
+                </div>          
+            </dialog>
+
+        <section id="faqSection" class="w-11/12 mx-auto scroll-mt-28 pb-20 hidden">
+            <div class="text-center">
+                <h1 class="font-bold text-4xl"><span class="text-[#00BCFF]">Frequently</span> Asked Questions</h1>
+            </div>
+            <div class="py-10">
+                <!-- FAQ Item -->
+                <div class="faq-item bg-gray-50 rounded-xl p-5 cursor-pointer my-5">
+                    <div class="flex justify-between items-center faq-header">
+                            <h3 class="font-semibold">
+                                1. What is the difference between var, let, and const?
+                            </h3>
+                            <span class="text-2xl font-bold faq-icon">−</span>
+                    </div>
+                        <p class="mt-3 text-gray-600 faq-content">
+                            var, let, and const are JavaScript keywords for variable declaration, differing mainly in scope, reassignment, and hoisting: var is function/global-scoped, re-declareable/reassignable; let is block-scoped, reassignable but not re-declareable; const is block-scoped, reassignable only if the property of an object (not the variable itself) and not re-declareable, requiring initialization. Modern JavaScript favors let for mutable variables and const for constants, avoiding var due to its less predictable scope. 
+                        </p>
+                </div>
+                <!-- FAQ Item -->
+                <div class="faq-item bg-gray-50 rounded-xl p-5 cursor-pointer my-5">
+                    <div class="flex justify-between items-center faq-header">
+                        <h3 class="font-semibold">
+                            2. What is the difference between map(), forEach(), and filter()?
+                        </h3>
+                        <span class="text-2xl font-bold faq-icon">+</span>
+                    </div>
+                    <p class="mt-3 text-gray-600 faq-content hidden">
+                        <span class="font-black">.</span> map() is used when you want to transform each element of an array. It runs a function on every item and returns a new array with the modified values, without changing the original array.
+                        <br>
+                        <span class="font-black">.</span> forEach() is used to perform an action on each element of an array, such as logging values or updating the UI. It does not return anything, so it is mainly used for side effects rather than data transformation.
+                        <br>
+                        <span class="font-black">.</span> filter() is used when you want to select specific elements from an array based on a condition. It checks each element and returns a new array containing only the elements that pass the condition.
+                    </p>
+                </div>
+
+                <!-- FAQ Item -->
+                <div class="faq-item bg-gray-50 rounded-xl p-5 cursor-pointer my-5">
+                    <div class="flex justify-between items-center faq-header">
+                        <h3 class="font-semibold">
+                            3. What are arrow functionsy and now are they different from regular functions?
+                        </h3>
+                        <span class="text-2xl font-bold faq-icon">+</span>
+                    </div>
+                    <p class="mt-3 text-gray-600 faq-content hidden">
+                        Arrow functions are a shorter syntax for writing functions in JavaScript. They are commonly used for cleaner and more readable code.
+                        <br>
+                        <br>
+                        They are different from regular functions in a few important ways. Arrow functions do not have their own this keyword; instead, they inherit this from the surrounding scope. This makes them especially useful in callbacks. They also do not have their own arguments object and cannot be used as constructors with the new keyword. Regular functions, on the other hand, have their own this, support arguments, and can be used as constructors.
+                    </p>
+                </div>
+
+                <!-- FAQ Item -->
+                <div class="faq-item bg-gray-50 rounded-xl p-5 cursor-pointer my-5">
+                    <div class="flex justify-between items-center faq-header">
+                        <h3 class="font-semibold">
+                            4. How do JavaScript Promises work??
+                        </h3>
+                        <span class="text-2xl font-bold faq-icon">+</span>
+                    </div>
+                    <p class="mt-3 text-gray-600 faq-content hidden">
+                        JavaScript Promises are used to handle asynchronous operations. A Promise represents a value that may be available now, in the future, or never.
+                        <br>
+                        <br>
+                        A Promise has three states: pending (initial state), fulfilled (operation completed successfully), and rejected (operation failed). When a Promise is fulfilled, it returns a result; when rejected, it returns an error. You handle these results using .then() for success and .catch() for errors, which helps write cleaner and more readable asynchronous code compared to traditional callbacks.
+                    </p>
+                </div>
+
+                <!-- FAQ Item -->
+                <div class="faq-item bg-gray-50 rounded-xl p-5 cursor-pointer my-5">
+                    <div class="flex justify-between items-center faq-header">
+                        <h3 class="font-semibold">
+                            5. How does closure work in JavaScript
+                        </h3>
+                        <span class="text-2xl font-bold faq-icon">+</span>
+                    </div>
+                    <p class="mt-3 text-gray-600 faq-content hidden">
+                        A closure in JavaScript happens when a function remembers and can access variables from its outer (lexical) scope, even after the outer function has finished executing.
+                        <br>
+                        <br>
+                        This works because functions in JavaScript keep a reference to the scope in which they were created. As a result, inner functions can continue to use outer variables, which is commonly used for data encapsulation, maintaining state, and creating private variables.
+                    </p>
+                </div>
+
+            </div>
         </section>
         
     </main>
@@ -75,13 +197,23 @@
             </div>
             <div>
                 <p class=" font-semibold text-sm text-[#5d5d5f] mb-2">Follow us</p>
-                <div class="flex gap-5 ">
-                <img src="./assets/fb-thumb.png" alt="">
-                <img src="./assets/youtube-thumb.png" alt="">
-                <img src="./assets/instagram-thumb.png" alt="">
+                <div class="flex gap-5 items-center">
+                    <a href="#" target="_blank">
+                        <img src="./assets/fb-thumb.png" alt="#">
+                    </a>
+                    <a href="#" target="_blank">
+                        <img src="./assets/youtube-thumb.png" alt="">
+                    </a>
+                    <a href="#" target="_blank">
+                        <img src="./assets/instagram-thumb.png" alt="">
+                    </a>
+                    <a href="#" target="_blank">
+                        <img src="./assets/github-thumb.png" alt="">
+                    </a>
                 </div>
             </div>
         </section>
+
     </footer>
     <script src="./index.js"></script>
 </body>
